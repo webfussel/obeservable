@@ -1,10 +1,10 @@
-import {Eventbus} from "./Eventbus/Eventbus";
+import { Eventbus } from "./Eventbus/Eventbus";
 
 new Eventbus('testbus')
 new Eventbus('otherbus')
 new Eventbus('unusedbus')
 
-const buses = Eventbus.getBus('testbus otherbus')
+const buses = Eventbus.get('testbus otherbus')
 const testbus = buses.testbus
 const otherbus = buses.otherbus
 
