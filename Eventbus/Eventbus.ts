@@ -137,7 +137,7 @@ export class Eventbus {
      * @param event
      */
     public get (event ?: string) : IEvent {
-        if(!event) return this.events
+        if (!event) return this.events
 
         const res : IEvent = {}
 
