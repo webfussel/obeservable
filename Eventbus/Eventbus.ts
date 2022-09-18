@@ -1,0 +1,178 @@
+import {IEvent} from "./IEvent";
+
+interface IBusStorage {
+    [k: string] : Eventbus
+}
+
+/**
+ * Event emitter and receiver class.
+ * Add events with `Eventbus.on('eventName', cbFunc)` or `Eventbus.once('eventName', cbFunc)`
+ * and broadcast it with `Eventbus.emit('eventName', parameterObject)`.
+ * @see Eventbus.on
+ * @see Eventbus.once
+ * @see Eventbus.emit
+ */
+export class Eventbus {
+
+    private static buses : IBusStorage = {}
+
+    private events : IEvent = {}
+
+    /**
+     * Creates an Eventbus object and stores it into Eventbus.buses.
+     * @see Eventbus.getAllBusses
+     * @see Eventbus.getBus
+     * @param busName Name of the Eventbus
+     */
+    constructor(busName : string) {
+        if (Eventbus.buses[busName]) throw Error(`Eventbus with name ${busName} already exists`)
+
+        Eventbus.buses[busName] = this
+    }
+
+    /**
+     * Gets all available Eventbuses.
+     */
+    public static getAllBusses () : IBusStorage {
+        return Eventbus.buses
+    }
+
+    /**
+     * Get Eventbus with given name.
+     * @param name Name of Eventbus to get
+     */
+    public static getBus (name : string) : Eventbus | null {
+        if (!name) throw TypeError(`Parameter name is not correctly filled. Expected: string with length > 0, got ${name}`)
+
+        return Eventbus.buses[name] || null
+    }
+
+    /**
+     * Delete Eventbus with given name.
+     * @param name Name of Eventbus to delete
+     */
+    public static deleteBus (name : string) {
+        if (!name) throw TypeError(`Parameter name is not correctly filled. Expected: string with length > 0, got ${name}`)
+
+        delete Eventbus.buses[name]
+    }
+
+    /**
+     * Executes all events added to given event name with details as parameter.
+     * @param event Name of the event
+     * @param details Containing more information about the event
+     */
+    public emit<T>(event : string, details ?: T) {
+        if (!event) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
+        if (!this.events[event]) return
+
+        const events = this.events[event]
+
+        events.every.forEach(cb => cb(details))
+        events.once.forEach(cb => cb(details))
+        events.once.length = 0
+    }
+
+    /**
+     * Adds callback to given event name.
+     * Can receive multiple events with a single space as separator.
+     * @param event Name(s) of the event(s)
+     * @param cb Callback to execute on emitting the event
+     */
+    public on(event : string, cb : Function) {
+        if (!event) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
+
+        event.split(' ').forEach(event => {
+            if (!this.events[event]) this.events[event] = {once: [], every: []}
+
+            this.events[event].every.push(cb)
+        })
+    }
+
+    /**
+     * Adds callback to given event name, that will be removed after call.
+     * Can receive multiple events with a single space as separator.
+     * @param event Name(s) of the event(s)
+     * @param cb Callback to execute once on emitting the event
+     */
+    public once(event : string, cb : Function) {
+        if (!event) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
+
+        event.split(' ').forEach(event => {
+            if (!this.events[event]) this.events[event] = {once: [], every: []}
+
+            this.events[event].once.push(cb)
+        })
+    }
+
+    /**
+     * Clears all events with given name(s).
+     * Can receive multiple events with a single space as separator.
+     * @param event Name of the event(s) to clear from callbacks
+     * @param cb Callback to execute after clearing the events
+     */
+    public clearEvent(event : string, cb ?: Function) {
+        if (!event) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
+
+        event.split(' ').forEach(event => {
+            delete this.events[event]
+        })
+
+        cb?.()
+    }
+
+    /**
+     * Clear all events.
+     * @param cb Callback to execute after clearing.
+     */
+    public clearAll(cb ?: Function) {
+        this.events = {}
+        cb?.()
+    }
+
+    /**
+     * Shorthand for Eventbus.clearEvent and Eventbus.clearAll.
+     * Either clears the event(s) given or everything if no event is given.
+     * @see Eventbus.clearEvent
+     * @see Eventbus.clearAll
+     * @param event Name of the event(s) to clear from callbacks
+     * @param cb Callback to execute after clearing.
+     */
+    public clear (event ?: string, cb ?: Function) {
+        if (event) this.clearEvent(event, cb)
+        else this.clearAll(cb)
+    }
+
+    /**
+     * Get all events with their callbacks with given name(s).
+     * Can receive multiple events with a single space as separator.
+     * @param event Name of the event(s) to return
+     */
+    public getEvent (event : string) : IEvent {
+        if (!event) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
+
+        const res : IEvent = {}
+
+        event.split(' ').forEach(event => {
+            res[event] = this.events[event]
+        })
+
+        return res
+    }
+
+    /**
+     * Get all events with their callbacks.
+     */
+    public getAll () : IEvent {
+        return this.events
+    }
+
+    /**
+     * Shorthand for Eventbus.getEvent and Eventbus.getAll.
+     * Either gets the event(s) with their callbacks with given name or every event if no name is given.
+     * @param event
+     */
+    public get (event ?: string) : IEvent {
+        return event ? this.getEvent(event) : this.getAll()
+    }
+}
