@@ -50,11 +50,14 @@ export class Eventbus {
     /**
      * Delete Eventbus with given name.
      * @param bus Name of Eventbus to delete
+     * @param cb Callback to call after deletion
      */
-    public static deleteBus (bus : string) {
+    public static clearBus (bus : string, cb ?: Function) {
         if (!bus) throw TypeError(`Parameter bus is not correctly filled. Expected: string with length > 0, got ${bus}`)
 
         delete Eventbus.buses[bus]
+
+        cb?.()
     }
 
     /**

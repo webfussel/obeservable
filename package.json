@@ -1,12 +1,9 @@
 {
   "name": "obeservable",
-  "version": "1.0.0",
-  "description": "A collection of lightweight observable collections",
-  "main": "main.ts",
-  "scripts": {
-    "start": "bun run main.ts"
-  },
-  "keywords": [],
+  "module": "main.ts",
+  "type": "module",
   "author": "webfussel<fiona@webfussel.de>",
-  "license": "ISC"
+  "devDependencies": {
+    "bun-types": "^0.1.0"
+  }
 }

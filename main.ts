@@ -3,6 +3,9 @@ import {Eventbus} from "./Eventbus/Eventbus";
 new Eventbus('testbus')
 const bus = Eventbus.getBus('testbus')
 
+// you can also directly use something like
+// const bus = new Eventbus('testbus')
+
 console.log(Eventbus.getAllBusses())
 
 bus.on('something', (param) => console.log('I should run every time |', param))
@@ -21,5 +24,5 @@ bus.clear('something', () => console.log('cleared event "something"'))
 console.log(bus.get())
 bus.emit('something', 'I will not be called anymore')
 
-Eventbus.deleteBus('testbus')
+Eventbus.clearBus('testbus')
 console.log(Eventbus.getAllBusses())
