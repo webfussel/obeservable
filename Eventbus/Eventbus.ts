@@ -20,7 +20,7 @@ export class Eventbus {
 
     /**
      * Creates an Eventbus object and stores it into Eventbus.buses.
-     * @see Eventbus.getAllBusses
+     * @see Eventbus.getAll
      * @see Eventbus.getBus
      * @param bus Name of the Eventbus
      */
@@ -33,29 +33,46 @@ export class Eventbus {
     /**
      * Gets all available Eventbuses.
      */
-    public static getAllBusses () : IBusStorage {
+    public static getAll () : IBusStorage {
         return Eventbus.buses
     }
 
     /**
      * Get Eventbus with given name.
-     * @param bus Name of Eventbus to get
+     * Can receive multiple buses with a single space as separator.
+     * @param bus Name(s) of Eventbus(es) to get
      */
-    public static getBus (bus : string) : Eventbus | null {
+    public static getBus (bus : string) : IBusStorage | null {
         if (!bus) throw TypeError(`Parameter bus is not correctly filled. Expected: string with length > 0, got ${bus}`)
 
-        return Eventbus.buses[bus] || null
+        const res : IBusStorage = {}
+        bus.split(' ').forEach(bus => {
+            res[bus] = Eventbus.buses[bus] ?? null
+        })
+
+        return res
+    }
+
+    /**
+     * Shorthand for Eventbus.getBus and Eventbus.getAllBuses
+     * @param bus Name(s) of Eventbus(es) to get
+     */
+    public static get (bus ?: string) : IBusStorage | null {
+        return bus ? Eventbus.getBus(bus) : Eventbus.getAll()
     }
 
     /**
      * Delete Eventbus with given name.
+     * Can receive multiple events with a single space as separator.
      * @param bus Name of Eventbus to delete
      * @param cb Callback to call after deletion
      */
-    public static clearBus (bus : string, cb ?: Function) {
+    public static clear (bus : string, cb ?: Function) {
         if (!bus) throw TypeError(`Parameter bus is not correctly filled. Expected: string with length > 0, got ${bus}`)
 
-        delete Eventbus.buses[bus]
+        bus.split(' ').forEach(bus => {
+            delete Eventbus.buses[bus]
+        })
 
         cb?.()
     }
@@ -136,14 +153,13 @@ export class Eventbus {
     /**
      * Shorthand for Eventbus.clearEvent and Eventbus.clearAll.
      * Either clears the event(s) given or everything if no event is given.
-     * @see Eventbus.clearEvent
-     * @see Eventbus.clearAll
+     * @see this.clearEvent
+     * @see this.clearAll
      * @param event Name of the event(s) to clear from callbacks
      * @param cb Callback to execute after clearing.
      */
     public clear (event ?: string, cb ?: Function) {
-        if (event) this.clearEvent(event, cb)
-        else this.clearAll(cb)
+        event ? this.clearEvent(event, cb) : this.clearAll(cb)
     }
 
     /**
@@ -157,7 +173,7 @@ export class Eventbus {
         const res : IEvent = {}
 
         event.split(' ').forEach(event => {
-            res[event] = this.events[event]
+            res[event] = this.events[event] ?? null
         })
 
         return res
@@ -174,6 +190,8 @@ export class Eventbus {
      * Shorthand for Eventbus.getEvent and Eventbus.getAll.
      * Either gets the event(s) with their callbacks with given name or every event if no name is given.
      * @param event
+     * @see this.getEvent
+     * @see this.getAll
      */
     public get (event ?: string) : IEvent {
         return event ? this.getEvent(event) : this.getAll()
