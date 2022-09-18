@@ -22,12 +22,12 @@ export class Eventbus {
      * Creates an Eventbus object and stores it into Eventbus.buses.
      * @see Eventbus.getAllBusses
      * @see Eventbus.getBus
-     * @param busName Name of the Eventbus
+     * @param bus Name of the Eventbus
      */
-    constructor(busName : string) {
-        if (Eventbus.buses[busName]) throw Error(`Eventbus with name ${busName} already exists`)
+    constructor(bus : string) {
+        if (Eventbus.buses[bus]) throw Error(`Eventbus with name ${bus} already exists`)
 
-        Eventbus.buses[busName] = this
+        Eventbus.buses[bus] = this
     }
 
     /**
@@ -39,22 +39,22 @@ export class Eventbus {
 
     /**
      * Get Eventbus with given name.
-     * @param name Name of Eventbus to get
+     * @param bus Name of Eventbus to get
      */
-    public static getBus (name : string) : Eventbus | null {
-        if (!name) throw TypeError(`Parameter name is not correctly filled. Expected: string with length > 0, got ${name}`)
+    public static getBus (bus : string) : Eventbus | null {
+        if (!bus) throw TypeError(`Parameter bus is not correctly filled. Expected: string with length > 0, got ${bus}`)
 
-        return Eventbus.buses[name] || null
+        return Eventbus.buses[bus] || null
     }
 
     /**
      * Delete Eventbus with given name.
-     * @param name Name of Eventbus to delete
+     * @param bus Name of Eventbus to delete
      */
-    public static deleteBus (name : string) {
-        if (!name) throw TypeError(`Parameter name is not correctly filled. Expected: string with length > 0, got ${name}`)
+    public static deleteBus (bus : string) {
+        if (!bus) throw TypeError(`Parameter bus is not correctly filled. Expected: string with length > 0, got ${bus}`)
 
-        delete Eventbus.buses[name]
+        delete Eventbus.buses[bus]
     }
 
     /**
