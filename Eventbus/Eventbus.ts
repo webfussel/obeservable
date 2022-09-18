@@ -20,8 +20,6 @@ export class Eventbus {
 
     /**
      * Creates an Eventbus object and stores it into Eventbus.buses.
-     * @see Eventbus.getAll
-     * @see Eventbus.getBus
      * @param bus Name of the Eventbus
      */
     constructor(bus : string) {
@@ -113,8 +111,6 @@ export class Eventbus {
 
     /**
      * Either clears the event(s) given or everything if no event is given.
-     * @see this.clearEvent
-     * @see this.clearAll
      * @param event Name of the event(s) to clear from callbacks
      * @param cb Callback to execute after clearing.
      */
