@@ -1,4 +1,4 @@
-import { Eventbus } from "../main";
+import { Eventbus } from "../src";
 
 new Eventbus('testbus')
 new Eventbus('otherbus')
