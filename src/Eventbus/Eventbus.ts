@@ -90,6 +90,7 @@ export class Eventbus {
      */
     public on(event : string, cb : Function) {
         if (!event) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
+        if (!cb) throw TypeError(`No callback was given for event ${event}`)
 
         event.split(' ').forEach(event => {
             if (!this.events[event]) this.events[event] = {once: [], every: []}
@@ -106,6 +107,7 @@ export class Eventbus {
      */
     public once(event : string, cb : Function) {
         if (!event) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
+        if (!cb) throw TypeError(`No callback was given for event ${event}`)
 
         event.split(' ').forEach(event => {
             if (!this.events[event]) this.events[event] = {once: [], every: []}
