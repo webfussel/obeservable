@@ -84,7 +84,7 @@ describe ('Eventbus', () => {
         it('should call callback after complete clear', () => {
             const mockFn = jest.fn()
 
-            Eventbus.clear(null, mockFn)
+            Eventbus.clear('', mockFn)
 
             expect(mockFn).toHaveBeenCalledTimes(1)
         })
@@ -127,9 +127,10 @@ describe ('Eventbus', () => {
             expect(() => {bus.on('', mockFn)}).toThrowError('Parameter event is not correctly filled.')
         })
         it('should throw error if no callback was given', () => {
+            const nullFunc = undefined as unknown as Function
             const bus = new Eventbus('testbus')
 
-            expect(() => {bus.on('lala', null)}).toThrowError('No callback was given')
+            expect(() => {bus.on('lala', nullFunc)}).toThrowError('No callback was given')
         })
     })
     describe('once', () => {
@@ -162,9 +163,10 @@ describe ('Eventbus', () => {
             expect(() => {bus.once('', mockFn)}).toThrowError('Parameter event is not correctly filled.')
         })
         it('should throw error if no callback was given', () => {
+            const nullFunc = undefined as unknown as Function
             const bus = new Eventbus('testbus')
 
-            expect(() => {bus.once('lala', null)}).toThrowError('No callback was given')
+            expect(() => {bus.once('lala', nullFunc)}).toThrowError('No callback was given')
         })
     })
     describe('emit', () => {
@@ -282,7 +284,7 @@ describe ('Eventbus', () => {
             const bus = new Eventbus('testbus')
             const mockFn = jest.fn()
 
-            bus.clear(null, mockFn)
+            bus.clear('', mockFn)
 
             expect(mockFn).toHaveBeenCalledTimes(1)
         })

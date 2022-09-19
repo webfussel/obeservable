@@ -1,3 +1,3 @@
-import { Eventbus } from "./Eventbus/Eventbus"
+import { Eventbus } from './Eventbus/Eventbus'
 
 export { Eventbus }
