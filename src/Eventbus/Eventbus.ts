@@ -39,9 +39,9 @@ export class Eventbus {
         }
 
         const res : IBusStorage = {}
-        bus.split(' ').forEach(bus => {
-            res[bus] = Eventbus.buses[bus] ?? null
-        })
+        bus.split(' ')
+            .filter(bus => !!Eventbus.buses[bus])
+            .forEach(bus => res[bus] = Eventbus.buses[bus])
 
         return res
     }
@@ -142,9 +142,9 @@ export class Eventbus {
 
         const res : IEvent = {}
 
-        event.split(' ').forEach(event => {
-            res[event] = this.events[event] ?? null
-        })
+        event.split(' ')
+            .filter(event => !!this.events[event])
+            .forEach(event => res[event] = this.events[event] ?? null)
 
         return res
     }

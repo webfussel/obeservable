@@ -47,14 +47,14 @@ describe ('Eventbus', () => {
 
             expect(res).toEqual(expected)
         })
-        it('should return null for non available buses', () => {
-            const expected = null
+        it('should not add unavailable buses to IBusStorage', () => {
+            const expected = ['testbus', 'yesbus']
 
             new Eventbus('testbus')
             new Eventbus('anotherbus')
             new Eventbus('yesbus')
 
-            const res = Eventbus.get('klamauk').klamauk
+            const res = Object.keys(Eventbus.get('testbus klamauk yesbus'))
 
             expect(res).toEqual(expected)
         })
