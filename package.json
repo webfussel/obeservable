@@ -1,6 +1,7 @@
 {
   "name": "obeservable",
   "description": "Different observable and - contrary to the name - lightweight objects.",
+  "version": "0.1.0",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "author": "webfussel<fiona@webfussel.de>",
