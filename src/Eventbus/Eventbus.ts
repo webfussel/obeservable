@@ -46,13 +46,17 @@ export class Eventbus {
     }
 
     /**
-     * Delete Eventbus with given name.
+     * Delete Eventbus with given name or all Buses if no name is given.
      * Can receive multiple events with a single space as separator.
      * @param bus Name of Eventbus to delete
      * @param cb Callback to call after deletion
      */
-    public static clear (bus : string, cb ?: Function) {
-        if (!bus) throw TypeError(`Parameter bus is not correctly filled. Expected: string with length > 0, got ${bus}`)
+    public static clear (bus ?: string, cb ?: Function) {
+        if (!bus) {
+            Eventbus.buses = {}
+            cb?.()
+            return
+        }
 
         bus.split(' ').forEach(bus => {
             delete Eventbus.buses[bus]
