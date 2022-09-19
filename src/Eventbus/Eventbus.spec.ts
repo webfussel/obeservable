@@ -15,6 +15,13 @@ describe ('Eventbus', () => {
 
             expect(res).toEqual(expected)
         })
+        it('should throw error if no name is given', () => {
+            expect(() => {new Eventbus('')}).toThrowError('Parameter bus is not correctly filled.')
+        })
+        it('should throw error if Bus already exists', () => {
+            new Eventbus('somebus')
+            expect(() => {new Eventbus('somebus')}).toThrowError('Eventbus with name somebus already exists')
+        })
     })
 
     describe ('static get', () => {

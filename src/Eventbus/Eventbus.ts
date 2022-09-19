@@ -23,6 +23,7 @@ export class Eventbus {
      * @param bus Name of the Eventbus
      */
     constructor(bus : string) {
+        if (!bus) throw TypeError(`Parameter bus is not correctly filled. Expected: string with length > 0, got ${bus}`)
         if (Eventbus.buses[bus]) throw Error(`Eventbus with name ${bus} already exists`)
 
         Eventbus.buses[bus] = this
