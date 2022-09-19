@@ -33,7 +33,7 @@ export class Eventbus {
      * Get Eventbus with given name or all Eventbuses if no name is given.
      * @param bus Name(s) of Eventbus(es) to get
      */
-    public static get (bus ?: string) : IBusStorage | null {
+    public static get (bus ?: string) : IBusStorage {
         if (!bus) {
             return Eventbus.buses
         }
