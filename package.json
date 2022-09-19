@@ -3,7 +3,11 @@
   "module": "main.ts",
   "type": "module",
   "author": "webfussel<fiona@webfussel.de>",
+  "scripts": {
+    "build": "tsc -d"
+  },
   "devDependencies": {
-    "bun-types": "^0.1.0"
+    "bun-types": "^0.1.0",
+    "typescript": "^4.8.3"
   }
 }

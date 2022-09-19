@@ -1,12 +1,12 @@
-import { Eventbus } from "./main";
+import { Eventbus } from "../main";
 
 new Eventbus('testbus')
 new Eventbus('otherbus')
 new Eventbus('unusedbus')
 
-const buses = Eventbus.get('testbus otherbus')
-const testbus = buses.testbus
-const otherbus = buses.otherbus
+const bus = Eventbus.get('testbus otherbus')
+const testbus = bus.testbus
+const otherbus = bus.otherbus
 
 console.log(testbus)
 console.log(otherbus)
