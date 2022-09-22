@@ -15,7 +15,7 @@
     "build": "rm -rf dist && rollup -c",
     "postbuild": "cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE",
     "packing": "npm pack ./dist",
-    "pub": "npm run test && npm run build && npm publish",
+    "pub": "npm run test && npm run build && npm publish ./dist",
     "test": "jest",
     "lint": "eslint --ext .ts src/."
   },
