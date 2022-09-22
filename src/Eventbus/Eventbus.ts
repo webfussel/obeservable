@@ -70,13 +70,15 @@ export class Eventbus {
      */
   public emit<T>(event: string, details?: T): void {
     if (event.trim().length === 0) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
-    if (this.events[event] === undefined) return
 
-    const events = this.events[event]
-
-    events.every.forEach(cb => cb(details))
-    events.once.forEach(cb => cb(details))
-    events.once.length = 0
+    event.split(' ').forEach(event => {
+      const events = this.events[event]
+      if (events !== undefined) {
+        events.every.forEach(cb => cb(details))
+        events.once.forEach(cb => cb(details))
+        events.once.length = 0
+      }
+    })
   }
 
   /**

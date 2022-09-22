@@ -8,9 +8,10 @@
   "scripts": {
     "build": "rm -rf dist && rollup -c",
     "postbuild": "cp package.json dist/package.json && cp README.md dist/README.md",
+    "packing": "npm pack ./dist",
+    "pub": "npm run build && npm publish",
     "test": "jest",
-    "lint": "eslint --ext .ts src/.",
-    "packing": "npm pack ./dist"
+    "lint": "eslint --ext .ts src/."
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
