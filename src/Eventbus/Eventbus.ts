@@ -36,8 +36,8 @@ export class Eventbus {
     if (bus === undefined || bus?.trim().length === 0) return Eventbus.buses
 
     const res: IBusStorage = {}
-    bus.split(' ')
-      .filter(bus => Eventbus.buses[bus] !== undefined)
+    const b = new Set(bus.split(' '))
+    ;[...b.values()].filter(bus => Eventbus.buses[bus] !== undefined)
       .forEach(bus => res[bus] = Eventbus.buses[bus])
 
     return res
@@ -71,7 +71,9 @@ export class Eventbus {
   public emit<T>(event: string, details?: T): void {
     if (event.trim().length === 0) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
 
-    event.split(' ').forEach(event => {
+    const ev = new Set(event.split(' '))
+
+    ;[...ev.values()].forEach(event => {
       const events = this.events[event]
       if (events !== undefined) {
         events.every.forEach(cb => cb(details))
@@ -91,7 +93,8 @@ export class Eventbus {
     if (event.trim().length === 0) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
     if (cb === undefined || cb === null) throw TypeError(`No callback was given for event ${event}`)
 
-    event.split(' ').forEach(event => {
+    const ev = new Set(event.split(' '))
+    ;[...ev.values()].forEach(event => {
       if (this.events[event] === undefined) this.events[event] = { once: [], every: [] }
 
       this.events[event].every.push(cb)
@@ -108,7 +111,8 @@ export class Eventbus {
     if (event.trim().length === 0) throw TypeError(`Parameter event is not correctly filled. Expected: string with length > 0, got ${event}`)
     if (cb === undefined || cb === null) throw TypeError(`No callback was given for event ${event}`)
 
-    event.split(' ').forEach(event => {
+    const ev = new Set(event.split(' '))
+    ;[...ev.values()].forEach(event => {
       if (this.events[event] === undefined) this.events[event] = { once: [], every: [] }
 
       this.events[event].once.push(cb)
@@ -143,7 +147,8 @@ export class Eventbus {
 
     const res: IEvent = {}
 
-    event.split(' ')
+    const ev = new Set(event.split(' '))
+    ;[...ev.values()]
       .filter(event => this.events[event] !== undefined)
       .forEach(event => res[event] = this.events[event] ?? null)
 
