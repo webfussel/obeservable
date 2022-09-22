@@ -1,15 +1,16 @@
 {
   "name": "obeservable",
   "description": "Different observable and - contrary to the name - lightweight objects.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "main": "index.cjs.js",
   "module": "index.esm.js",
-  "author": "webfussel<fiona@webfussel.de>",
+  "author": "webfussel <fiona@webfussel.de> (https://webfussel.de)",
+  "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && rollup -c",
-    "postbuild": "cp package.json dist/package.json && cp README.md dist/README.md",
+    "postbuild": "cp package.json dist/package.json && cp README.md dist/README.md && cp LICENCE dist/LICENCE",
     "packing": "npm pack ./dist",
-    "pub": "npm run build && npm publish",
+    "pub": "npm run test && npm run build && npm publish",
     "test": "jest",
     "lint": "eslint --ext .ts src/."
   },
