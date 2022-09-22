@@ -6,7 +6,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "declaration": true,
-    "declarationDir": "dist/types",
     "allowJs": true,
     "esModuleInterop": true,
     "strictNullChecks": true
@@ -19,6 +18,7 @@
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "**/*.spec.ts"
   ]
 }
