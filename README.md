@@ -37,7 +37,7 @@ const bus = new Eventbus('some_name')
 You can create as many buses as you wish... if you ever need one than more.
 Also, you don't need to store your event bus in some `window` or `global`.
 `Eventbus` itself contains a map with all your created buses that you can then get as you need them.
-Simply call the static `.get` method and if you want to have more than one bus, destructure the result.
+Simply call the static `.get()` method and if you want to have more than one bus, destructure the result.
 You can get more buses with a simple space between their names.
 
 ```js
@@ -46,7 +46,7 @@ const { some_bus, some_other_bus, yes_bus } = Eventbus.get('some_bus some_other_
 
 #### Create, listen to and emit Events
 Events only work on `Eventbus` instances - therefore you first need to create one.
-You can then add events to the bus via `.on()` or `once()` methods.
+You can then add events to the bus via `.on()` or `.once()` methods.
 `.on()` will execute every time an event is emitted, while `once()` will only be executed the next time the event gets emitted.
 You can emit an event with `.emit()`.
 
