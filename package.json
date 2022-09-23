@@ -2,7 +2,7 @@
   "name": "obeservable",
   "description": "Different observable and - contrary to the name - lightweight objects.",
   "keywords": ["observable", "event", "emitter", "eventbus"],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.cjs.js",
   "module": "index.esm.js",
   "author": "webfussel <fiona@webfussel.de> (https://webfussel.de)",
