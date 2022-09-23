@@ -1,8 +1,4 @@
-import { IEvent } from './IEvent'
-
-interface IBusStorage {
-  [k: string]: Eventbus
-}
+import { IEventRate } from './IEventRate'
 
 /**
  * Event emitter and receiver class.
@@ -13,9 +9,9 @@ interface IBusStorage {
  * @see Eventbus.emit
  */
 export class Eventbus {
-  private static buses: IBusStorage = {}
+  private static buses: Record<string, Eventbus> = {}
 
-  private events: IEvent = {}
+  private events: Record<string, IEventRate> = {}
 
   /**
      * Creates an Eventbus object and stores it into Eventbus.buses.
@@ -32,10 +28,10 @@ export class Eventbus {
      * Get Eventbus with given name or all Eventbuses if no name is given.
      * @param bus Name(s) of Eventbus(es) to get
      */
-  public static get (bus?: string): IBusStorage {
+  public static get (bus?: string): Record<string, Eventbus> {
     if (bus === undefined || bus?.trim().length === 0) return Eventbus.buses
 
-    const res: IBusStorage = {}
+    const res: Record<string, Eventbus> = {}
     const b = new Set(bus.split(' '))
     ;[...b.values()].filter(bus => Eventbus.buses[bus] !== undefined)
       .forEach(bus => res[bus] = Eventbus.buses[bus])
@@ -142,10 +138,10 @@ export class Eventbus {
      * Gets the event(s) with their callbacks with given name or every event if no name is given.
      * @param event Name(s) of the event(s)
      */
-  public get (event?: string): IEvent {
+  public get (event?: string): Record<string, IEventRate> {
     if (event === undefined || event.trim().length === 0) return this.events
 
-    const res: IEvent = {}
+    const res: Record<string, IEventRate> = {}
 
     const ev = new Set(event.split(' '))
     ;[...ev.values()]
